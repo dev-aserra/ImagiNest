@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="./css/styles.css" type="text/css" rel="stylesheet">
+    <link rel="shortcut icon" href="./img/favicon.svg" type="image/x-icon"/>
 </head>
     <body class="bg-dark">
         <section>
@@ -33,12 +34,12 @@
                                 <input type="email" name="email" class="form-control bg-dark-x border-0 mb-2" id="email" placeholder="Introdueix un correu electrònic" required>
                             </div>
                             <div class="mb-4">
-                                <label for="firstName" class="form-label fw-bold">Nom</label>
-                                <input type="text" name="firstName" class="form-control bg-dark-x border-0 mb-2" id="firstName" placeholder="Introdueix el teu nom">
+                                <label for="firstname" class="form-label fw-bold">Nom</label>
+                                <input type="text" name="firstname" class="form-control bg-dark-x border-0 mb-2" id="firstname" placeholder="Introdueix el teu nom">
                             </div>
                             <div class="mb-4">
-                                <label for="lastName" class="form-label fw-bold">Cognoms</label>
-                                <input type="text" name="lastName" class="form-control bg-dark-x border-0 mb-2" id="lastName" placeholder="Introdueix els teus cognoms">
+                                <label for="lastname" class="form-label fw-bold">Cognoms</label>
+                                <input type="text" name="lastname" class="form-control bg-dark-x border-0 mb-2" id="lastname" placeholder="Introdueix els teus cognoms">
                             </div>
                             <div class="mb-4">
                                 <label for="pass" class="form-label fw-bold">Contrasenya</label>
