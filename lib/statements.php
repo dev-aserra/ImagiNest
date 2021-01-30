@@ -49,3 +49,11 @@ function actualitzarIniciSessio($usernameMail)
     $stmt = $db->prepare("UPDATE users SET lastSignIn = current_timestamp WHERE (username = '{$usernameMail}' or mail = '{$usernameMail}')");
     $stmt->execute();
 }
+
+function getUsername($usernameMail)
+{
+    include dirname(__FILE__) . '\..\config\db.php';
+    $stmt = $db->prepare("SELECT username FROM users WHERE mail = '{$usernameMail}'");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}

@@ -6,7 +6,7 @@ body {
 body {
   padding-top: 56px;
   font-family: 'Spartan', sans-serif;
-  background: url('../img/background.jpg') fixed 50% / cover;
+  background: url('../img/background_home.jpg') fixed 50% / cover;
 }
 
 @media (max-width: 991.98px) {

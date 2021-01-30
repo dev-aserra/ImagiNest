@@ -14,7 +14,7 @@
         <section>
             <div class="row g-0">
                 <div class="col-lg-7 d-none d-lg-block background">
-                    <div class="img-1 min-vh-100 active"></div>
+                    <div class="img-register min-vh-100 active"></div>
                 </div>
                 <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
                     <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 w-50 mb-auto">
@@ -60,5 +60,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#modal").modal("show");
+            });
+        </script>
     </body>
 </html>

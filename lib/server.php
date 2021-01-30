@@ -77,7 +77,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (comprovaContrasenya($usernameMail, $password)) {
                 // Llavors actualitzem el camp lastSignIn, guardem valors a la sessió i redirigim al home.php
                 actualitzarIniciSessio($usernameMail);
-                $_SESSION['username'] = $usernameMail;
+                // Si és un email, busca el seu username
+                if(filter_var($usernameMail, FILTER_VALIDATE_EMAIL)) $_SESSION['username'] = getUsername($usernameMail);
+                else $_SESSION['username'] = $usernameMail;
                 $_SESSION['success'] = "Has iniciat sessió correctament";
                 header('Location: home.php');
                 exit;
@@ -88,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     // Si l'usuari ha fet login, redirigeix al home.php
-    if (isset($_SESSION['username']) && (strrpos($_SERVER["REQUEST_URI"], "index.php"))) {
+    if (isset($_SESSION['username'])) {
         header("Location: home.php");
         exit;
     }

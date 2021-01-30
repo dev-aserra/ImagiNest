@@ -18,8 +18,14 @@ body {
   line-height: initial;
 }
 
-.img-1 {
-  background-image: url('../img/background.jpg');
+.img-login {
+  background-image: url('../img/background_login.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.img-register {
+  background-image: url('../img/background-register.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -28,6 +34,6 @@ body {
   color: #949ba2 !important;
 }
 
-input:valid {
+input:valid, input:invalid {
   color: #ffffff;
 }
