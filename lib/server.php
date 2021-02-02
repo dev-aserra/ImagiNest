@@ -5,9 +5,22 @@ session_start();
 $username = $email = $firstname = $lastname = $password = $verifypass = $usernameMail = $password_hash = "";
 $errors = array();
 
+// Comprova error accés inválid de mailCheckAccount.php per mostrar-lo
+if(isset($_SESSION['mailCheck'])){
+	array_push($errors, $_SESSION['mailCheck']);
+	unset($_SESSION['mailCheck']);
+}
+
+// Comprova error de resetPasswordSend.php per mostrar-lo
+if(isset($_SESSION['pswdCheck'])){
+	array_push($errors, $_SESSION['pswdCheck']);
+	unset($_SESSION['pswdCheck']);
+}
+
 // Connexió base de dades
 include dirname(__FILE__) . "\\" . '..\config\db.php';
 include dirname(__FILE__) . "\\" . 'statements.php';
+include dirname(__FILE__) . "\\" . 'mail.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // REGISTRE
@@ -58,10 +71,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Finalment registrar l'usuari si no hi ha hagut errors
         if (count($errors) == 0) {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            insereixUsuari($email, $username, $password_hash, $firstname, $lastname);
-            $_SESSION['success'] = "S'ha registrat l'usuari correctament";
-            header('Location: index.php');
-            exit;
+            $activationcode = hash('sha256', rand().time());
+            if(insereixUsuari($email, $username, $password_hash, $firstname, $lastname, $activationcode))
+            {
+                enviarMailVerificacio($email, $username, $activationcode);
+                $_SESSION['success'] = "S'ha registrat correctament. Verifiqueu el vostre correu electrònic.";
+                header('Location: index.php');
+                exit;
+            } else {
+                array_push($errors, "Hi ha hagut un problema amb el registre. Torneu-ho a intentar més tard.");
+            }
         }
     }
 

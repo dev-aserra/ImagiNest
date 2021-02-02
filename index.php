@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inici Sessió</title>
+    <title>Iniciar Sessió</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;600&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -33,7 +33,7 @@
                             <div class="mb-4">
                                 <label for="pass" class="form-label fw-bold">Contrasenya</label>
                                 <input type="password" name="pass" id="pass" class="form-control bg-dark-x border-0 mb-2" placeholder="Introdueix la teva contrasenya">
-                                <a href="#" class="form-text text-muted text-decoration-none">Has oblidat la teva contrasenya?</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#pwdModal" class="form-text text-muted text-decoration-none">Has oblidat la teva contrasenya?</a>
                             </div>
                             <button type="submit" class="btn btn-primary w-100 fw-bold" name="login">Iniciar sessió</button>
                         </form>
@@ -52,5 +52,37 @@
                 $("#modal").modal("show");
             });
         </script>
+
+        <!--Modal Restablir Contrasenya-->
+        <div id="pwdModal" class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title fw-bold">Restablir Contrasenya</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="text-center">
+                                        <p>Si heu oblidat la contrasenya, podeu restablir-la aquí.</p>
+                                        <div class="panel-body">
+                                            <form action="./resetPasswordSend.php" method="POST" class="mb-3" autocomplete="off">
+                                                <div class="mb-4">
+                                                    <input type="text" name="usermailpwd" class="form-control bg-dark-x border-0" id="usermailpwd" placeholder="Usuari/Correu">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100 fw-bold" name="pwdreset">Restablir la contrasenya</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>

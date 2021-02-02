@@ -23,7 +23,7 @@
                     </div>
                     <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto">
                         <h1 class="fw-bold mb-4">Registre</h1>
-                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="mb-5">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="mb-2">
                             <?php include 'lib/errors.php';?>
                             <div class="mb-4">
                                 <label for="username" class="form-label fw-bold">Nom d'usuari</label>
@@ -51,9 +51,9 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100 fw-bold" name="register">Registre</button>
                         </form>
-                    </div>
-                    <div class="text-center px-lg-5 pt-lg-3 pb-lg-4 p-4 w-100 mt-auto">
-                        <p class="d-inline-block mb-0">Ja tens cap compte?</p><a href="./index.php" class="text-light fw-bold text-decoration-none"> Inicia sessió aquí</a>
+                        <div class="text-center px-lg-5 pt-lg-3 pb-0 p-4 w-100 mt-auto">
+                            <p class="d-inline-block mb-0">Ja tens compte?</p><a href="./index.php" class="text-light fw-bold text-decoration-none"> Inicia sessió aquí</a>
+                        </div>
                     </div>
                 </div>
             </div>
