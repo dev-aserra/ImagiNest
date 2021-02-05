@@ -48,6 +48,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
         <script type="text/javascript">
+            // Mostrar el modal amb id "modal"
             $(document).ready(function(){
                 $("#modal").modal("show");
             });

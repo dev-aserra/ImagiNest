@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// Si no s'ha loginat, retorna a index.php
 if (!isset($_SESSION['username'])) {
     header('Location: index.php');
     exit;

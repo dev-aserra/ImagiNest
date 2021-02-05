@@ -15,19 +15,19 @@
         <section>
             <div class="row g-0">
                 <div class="col-lg-7 d-none d-lg-block background">
-                    <div class="img-register min-vh-100 active"></div>
+                    <div class="img-register active"></div>
                 </div>
                 <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
                     <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 w-50 mb-auto">
                         <img src="./img/logo.svg" class="img-fluid">
                     </div>
                     <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto">
-                        <h1 class="fw-bold mb-4">Registre</h1>
+                        <h1 class="fw-bold mb-4 h4">Registre</h1>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="mb-2">
                             <?php include 'lib/errors.php';?>
                             <div class="mb-4">
                                 <label for="username" class="form-label fw-bold">Nom d'usuari</label>
-                                <input type="text" name="username" class="form-control bg-dark-x border-0 mb-2" id="username" placeholder="Introdueix un nom d'usuari" required>
+                                <input type="text" name="username" class="form-control bg-dark-x border-0 mb-2 register" id="username" placeholder="Introdueix un nom d'usuari" required>
                             </div>
                             <div class="mb-4">
                                 <label for="email" class="form-label fw-bold">Correu electrònic</label>
@@ -62,6 +62,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
         <script type="text/javascript">
+            // Mostrar el modal amb id "modal"
             $(document).ready(function(){
                 $("#modal").modal("show");
             });

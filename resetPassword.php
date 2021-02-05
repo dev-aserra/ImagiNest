@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if(isset($_GET['mail'])) $_SESSION['rpswdUserMail'] = $usernameMail = filter_input(INPUT_GET, 'mail');
         else $_SESSION['rpswdUserMail'] = $usernameMail = filter_input(INPUT_GET, 'user');
 
-        // Comprovem si existeix el codi i user/email i el temps no ha excedit
+        // Si no existeix el codi i user/email i el temps ha excedit, redirigeix a index.php
         if(!(comprovaCodiResetPswd($usernameMail, $hash) > 0 AND !comprovaTempsResetPswd($usernameMail, $hash))){
             // URL no vàlid o temps excedit
             $_SESSION['pswdCheck'] = "L'URL no és vàlid o s'ha excedit el temps límit per restablir la contrasenya.";
@@ -20,18 +20,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             exit;
         }
     }else{
-        // Accés no vàlid
+        // Accés no vàlid a través de GET
         $_SESSION['pswdCheck'] = "L'accés no és vàlid. Utilitzeu l'enllaç que s'ha enviat al vostre correu electrònic";
         unset($_SESSION['rpswdHash'], $_SESSION['rpswdUserMail']);
         header('Location: index.php');
         exit;
     }
 }elseif ($_SERVER["REQUEST_METHOD"] == "POST"){
+    // Si entra per POST, comprova si s'ha enviat amb el nom resetPswd
     if (isset($_POST['resetPswd'])){
         $hash = $_SESSION['rpswdHash'];
         $usernameMail = $_SESSION['rpswdUserMail'];
         // Comprovem si existeix el codi i user/email i el temps no ha excedit
         if (comprovaCodiResetPswd($usernameMail, $hash) > 0 AND !comprovaTempsResetPswd($usernameMail, $hash)){
+            // Agafem els valors del POST
             $password = filter_input(INPUT_POST, 'inputPswdReset');
             $verifypass = filter_input(INPUT_POST, 'inputPswdResetVerify');
 
@@ -39,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if (preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{6,20}$/", $password) AND $password == $verifypass){
                 // Comprovem si la contrasenya no és la mateixa
                 if (!comprovaContrasenya($usernameMail, $password)){
-                    // Contrasenya diferent
+                    // Contrasenya diferent a la actual. Actualitzem a la nova
                     $password_hash = password_hash($password, PASSWORD_DEFAULT);
                     //Actualitzem la contrasenya desada a la base de dades
                     actualitzarContrasenya($usernameMail, $password_hash);
@@ -52,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     header('Location: index.php');
                     exit;
                 }else{
-                    // Mateixa contrasenya
+                    // Contrasenya igual a la actual. No actualitzem
                     // Esborrem els valors assignats pel restabliment de la contrasenya
                     netejarResetPassword($usernameMail);
                     $_SESSION['pswdCheck'] = "S'ha introduït la contrasenya actual. S'ha cancel·lat la operació.";

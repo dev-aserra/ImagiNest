@@ -3,6 +3,7 @@ session_start();
 include dirname(__FILE__) . "\\" . '\lib\mail.php';
 include dirname(__FILE__) . "\\" . '\lib\statements.php';
 
+// Comprova si s'accedeix per POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['pwdreset'])) {
         // Rebem el valor de l'input del form

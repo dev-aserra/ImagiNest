@@ -2,11 +2,13 @@
 session_start();
 include dirname(__FILE__) . "\\" . 'lib\statements.php';
 
+// Comprovem els paràmetres que passen pel GET
 if(isset($_GET['mail']) && !empty($_GET['mail']) AND isset($_GET['code']) && !empty($_GET['code'])){
-    // Verifiquem les dades
+    // Rebem les dades
     $hash = filter_input(INPUT_GET, 'code'); // Assignem variable hash
     $email = filter_input(INPUT_GET, 'mail'); // Assignem variable email
-                  
+    
+    // Comprovem el codi rebut amb el seu correu
     if(comprovaCodiActivacio($email, $hash) > 0){
         // Si ens coincideix, activem el compte.
         activarCompte($email, $hash);
@@ -18,9 +20,10 @@ if(isset($_GET['mail']) && !empty($_GET['mail']) AND isset($_GET['code']) && !em
     }
                   
 }else{
-    // Accés no vàlid
+    // Accés no vàlid si no intenta accedir amb GET
     $_SESSION['mailCheck'] = "L'accés no és vàlid. Utilitzeu l'enllaç que s'ha enviat al vostre correu electrònic";
 }
 
+// Al acabar redirecciona a index.php
 header('Location: index.php');
 exit;
