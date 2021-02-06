@@ -28,7 +28,6 @@ body {
   background-image: url('../img/background-register.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 140vh!important;
 }
 
 .text-muted {

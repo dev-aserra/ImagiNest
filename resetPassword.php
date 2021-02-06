@@ -3,6 +3,8 @@ session_start();
 include dirname(__FILE__) . "\\" . 'lib\statements.php';
 include dirname(__FILE__) . "\\" . 'lib\mail.php';
 
+$errors = array();
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if(count($_GET) == 2 AND isset($_GET['code']) && !empty($_GET['code']) AND ((isset($_GET['mail']) && !empty($_GET['mail'])) || (isset($_GET['user']) && !empty($_GET['user'])))){
         // Verifiquem les dades
@@ -55,21 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     exit;
                 }else{
                     // Contrasenya igual a la actual. No actualitzem
-                    // Esborrem els valors assignats pel restabliment de la contrasenya
-                    netejarResetPassword($usernameMail);
-                    $_SESSION['pswdCheck'] = "S'ha introduït la contrasenya actual. S'ha cancel·lat la operació.";
-                    unset($_SESSION['rpswdHash'], $_SESSION['rpswdUserMail']);
-                    header('Location: index.php');
-                    exit;
+                    array_push($errors, "S'ha introduït la contrasenya actual. Torneu a provar.");
                 }
             }else{
                 // La contrasenya no compleix la seguretat de contrasenya establerta
-                // Esborrem els valors assignats pel restabliment de la contrasenya
-                netejarResetPassword($usernameMail);
-                $_SESSION['pswdCheck'] = "Les dades subministrades són incorrectes. S'ha cancel·lat la operació.";
-                unset($_SESSION['rpswdHash'], $_SESSION['rpswdUserMail']);
-                header('Location: index.php');
-                exit;
+                array_push($errors, "Les dades subministrades són incorrectes. Torneu a provar.");
             }
         }else{
             // El codi i usuari/email és incorrecte o el temps de restabliment ha expirat
@@ -111,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto">
                         <h1 class="fw-bold mb-4">Restablir la contrasenya</h1>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="mb-5" autocomplete="off">
+                            <?php include 'lib/errors.php';?>
                             <div class="mb-4">
                                 <label for="inputPswdReset" class="form-label fw-bold">Nova Contrasenya</label>
                                 <input type="password" name="inputPswdReset" class="form-control bg-dark-x border-0" id="inputPswdReset" placeholder="Introdueix la nova contrasenya" autocomplete="off">
@@ -128,6 +121,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>   
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+            // Mostrar el modal amb id "modal"
+            $(document).ready(function(){
+                $("#modal").modal("show");
+            });
+        </script>
     </body>
 </html>

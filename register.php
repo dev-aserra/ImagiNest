@@ -15,10 +15,10 @@
         <section>
             <div class="row g-0">
                 <div class="col-lg-7 d-none d-lg-block background">
-                    <div class="img-register active"></div>
+                    <div class="img-register h-100 active"></div>
                 </div>
                 <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
-                    <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 w-50 mb-auto">
+                    <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 w-50">
                         <img src="./img/logo.svg" class="img-fluid">
                     </div>
                     <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto">
@@ -27,19 +27,19 @@
                             <?php include 'lib/errors.php';?>
                             <div class="mb-4">
                                 <label for="username" class="form-label fw-bold">Nom d'usuari</label>
-                                <input type="text" name="username" class="form-control bg-dark-x border-0 mb-2 register" id="username" placeholder="Introdueix un nom d'usuari" required>
+                                <input type="text" name="username" class="form-control bg-dark-x border-0 mb-2 register" id="username" placeholder="Introdueix un nom d'usuari" value="<?php if(isset($username)) echo $username;?>" required>
                             </div>
                             <div class="mb-4">
                                 <label for="email" class="form-label fw-bold">Correu electrònic</label>
-                                <input type="email" name="email" class="form-control bg-dark-x border-0 mb-2" id="email" placeholder="Introdueix un correu electrònic" required>
+                                <input type="email" name="email" class="form-control bg-dark-x border-0 mb-2" id="email" placeholder="Introdueix un correu electrònic" value="<?php if(isset($email)) echo $email;?>" required>
                             </div>
                             <div class="mb-4">
                                 <label for="firstname" class="form-label fw-bold">Nom</label>
-                                <input type="text" name="firstname" class="form-control bg-dark-x border-0 mb-2" id="firstname" placeholder="Introdueix el teu nom">
+                                <input type="text" name="firstname" class="form-control bg-dark-x border-0 mb-2" id="firstname" placeholder="Introdueix el teu nom" value="<?php if(isset($firstname)) echo $firstname;?>">
                             </div>
                             <div class="mb-4">
                                 <label for="lastname" class="form-label fw-bold">Cognoms</label>
-                                <input type="text" name="lastname" class="form-control bg-dark-x border-0 mb-2" id="lastname" placeholder="Introdueix els teus cognoms">
+                                <input type="text" name="lastname" class="form-control bg-dark-x border-0 mb-2" id="lastname" placeholder="Introdueix els teus cognoms" value="<?php if(isset($lastname)) echo $lastname;?>">
                             </div>
                             <div class="mb-4">
                                 <label for="pass" class="form-label fw-bold">Contrasenya</label>

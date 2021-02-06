@@ -28,7 +28,7 @@
                             <?php if (isset($_SESSION['success'])) {?><div class="alert alert-success pt-0 pb-0 pl-1 pr-1" role="alert"><p class="pt-3"><?php echo $_SESSION['success'] ?></p></div><?php }unset($_SESSION['success']);?>
                             <div class="mb-4">
                                 <label for="userMail" class="form-label fw-bold">Usuari/Correu</label>
-                                <input type="text" name="userMail" class="form-control bg-dark-x border-0" id="userMail" placeholder="Introdueix el teu Usuari/Correu">
+                                <input type="text" name="userMail" class="form-control bg-dark-x border-0" id="userMail" placeholder="Introdueix el teu Usuari/Correu" value="<?php if(isset($usernameMail)) echo $usernameMail;?>">
                             </div>
                             <div class="mb-4">
                                 <label for="pass" class="form-label fw-bold">Contrasenya</label>
