@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content bg-dark-x">
 				<div class="modal-header border-bottom-0">
-					<h5 class="modal-title fw-bold">Error</h5>
+					<h5 class="modal-title fw-bold text-white">Error</h5>
 					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">

@@ -1,0 +1,82 @@
+:root {
+  --grey: #fafafa;
+  --white: #ffffff;
+  --dark-x: #1e2126;
+}
+
+.bg-dark-x { background-color: var(--dark-x); }
+
+body {
+  font-family: 'Spartan', sans-serif;
+  background: url('../img/background_home.jpg') fixed 50% / cover;
+  padding: 0;
+  margin: 0;
+}
+
+.bg-grey {
+  background-color: var(--grey);
+}
+.bg-light {
+  background-color: var(--white) !important;
+}
+
+.navbar {
+  min-height: 5rem;
+}
+
+i.lead {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.py-m {
+  padding-top: 3rem;
+  padding-bottom: 8rem;
+}
+
+textarea {
+  resize: none;
+}
+
+* > .fa-hover-show,
+*:hover > .fa-hover-hidden {
+  display: none;
+}
+*:hover > .fa-hover-show {
+  display: inline-block;
+}
+
+* > .fa-hover-show,
+*:hover > .fa-hover-hidden,
+*:focus > .fa-hover-hidden {
+  display: none;
+}
+*:focus > .fa-hover-show,
+*:hover > .fa-hover-show {
+  display: inline-block;
+}
+
+.icon-gray {
+  color: gray !important;
+}
+
+.rating {
+	direction: rtl;
+	unicode-bidi: bidi-override;
+	color: #ddd;
+}
+.rating input {
+	display: none;
+}
+.rating label:hover,
+.rating label:hover ~ label,
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+	color: #ffc107;
+}
+
+/*@media (max-width: 992px) {
+ #img {
+
+ }
+}*/

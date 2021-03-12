@@ -83,6 +83,17 @@ function getUsername($usernameMail)
     return $stmt->fetchColumn();
 }
 
+function getUserId($username)
+{
+    global $db;
+    $sql = "SELECT iduser FROM users WHERE username = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $username, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
 function comprovaCodiActivacio($email, $hash)
 {
     global $db;
@@ -172,3 +183,145 @@ function netejarResetPassword($usernameMail)
     $stmt->bindParam(2, $usernameMail, PDO::PARAM_STR);
     $stmt->execute();
 }
+
+function insereixFotografia($nom,$descripcio,$path,$usuariId)
+{
+    global $db;
+    $sql = "INSERT INTO fotografia (nom, descripcio, data, url, usuariId) VALUES (? ,? ,CURRENT_TIMESTAMP ,? ,?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+    $stmt->bindParam(2, $descripcio, PDO::PARAM_STR);
+    $stmt->bindParam(3, $path, PDO::PARAM_STR);
+    $stmt->bindParam(4, $usuariId, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function existeixHashtag($hashtag)
+{
+    global $db;
+    $sql = "SELECT nom FROM hashtags WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $hashtag, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function insereixHashtag($hashtag) 
+{
+    global $db;
+    $sql = "INSERT INTO hashtags (nom) VALUES (?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $hashtag, PDO::PARAM_STR);
+    return $stmt->execute();
+}
+
+function insereixFotografiaHashtag($imgNom, $hashtag)
+{
+    global $db;
+    $sql = "INSERT INTO fotografiahashtags (fotografiaNom, hashtagNom) VALUES (? ,?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $imgNom, PDO::PARAM_STR);
+    $stmt->bindParam(2, $hashtag, PDO::PARAM_STR);
+    return $stmt->execute();
+}
+
+function comprovarHashtags($imgNom,$hashtagArray)
+{
+    foreach ($hashtagArray[0] as $hashtag) {
+        if(!existeixHashtag($hashtag))
+        {
+            insereixHashtag($hashtag);
+        }
+        insereixFotografiaHashtag($imgNom,$hashtag);
+    }
+}
+
+function buscaUltimaFotografia()
+{
+    global $db;
+    $sql = "SELECT nom FROM fotografia WHERE data = (SELECT MAX(data) FROM fotografia)";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getUsernameById($userId)
+{
+    global $db;
+    $sql = "SELECT username FROM users WHERE iduser = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getUserByPhoto($nom)
+{
+    global $db;
+    $sql = "SELECT usuariId FROM fotografia WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $userId = $stmt->fetchColumn();
+
+    return  getUsernameById($userId);
+}
+
+function getDateByPhoto($fotografiaNom)
+{
+    global $db;
+    $sql = "SELECT data FROM fotografia WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getDescriptionByPhoto($fotografiaNom)
+{
+    global $db;
+    $sql = "SELECT descripcio FROM fotografia WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getUrlByPhoto($fotografiaNom)
+{
+    global $db;
+    $sql = "SELECT url FROM fotografia WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getRandomPhoto($rand)
+{
+    $random = $rand - 1;
+    global $db;
+    $sql = "SELECT nom FROM fotografia LIMIT 1 OFFSET $random";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getNumberOfPhotos()
+{
+    global $db;
+    $sql = "SELECT count(*) FROM fotografia";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
