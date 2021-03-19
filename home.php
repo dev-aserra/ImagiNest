@@ -208,7 +208,7 @@
                               </button>
                             </form>
                           </div>
-                          <?php if(!isset($noPhotos)) echo '<a class="text-decoration-none" href="./profile.php?user="'.getUserByPhoto($_SESSION['fotografiaNom']).'><h5 class="fw-bold">@'.getUserByPhoto($_SESSION['fotografiaNom']).'</h5></a>';?>
+                          <?php if(!isset($noPhotos)) echo '<a class="text-decoration-none" href="./profile.php?user='. getUserByPhoto($_SESSION['fotografiaNom']).'"><h5 class="fw-bold">@'.getUserByPhoto($_SESSION['fotografiaNom']).'</h5></a>';?>
                           <p><?php if(!isset($noPhotos)) echo date('d/m/Y',strtotime(getDateByPhoto($_SESSION['fotografiaNom'])))?></p>
                           <p><?php if(!isset($noPhotos)) echo getDescriptionByPhoto($_SESSION['fotografiaNom'])?><br><?php ?></p>
                       </div>
