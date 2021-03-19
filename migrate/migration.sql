@@ -27,19 +27,28 @@ create table if not exists fotografia (
     url varchar(100),
     likes int default 0,
     dislikes int default 0,
-    puntuacio decimal(3,2),
+    puntuacio decimal(3,2) default 0,
     usuariId int,
-    constraint fk_fotografia_users foreign key (usuariId) references users(iduser)
+    constraint fk_fotografia_users foreign key (usuariId) references users(iduser) on delete cascade
 ) engine = InnoDB;
 
 create table if not exists hashtags (
     nom varchar(30) primary key
 ) engine = InnoDB;
 
-create table if not exists FotografiaHashtags (
+create table if not exists fotografiahashtags (
     fotografiaNom char(64),
     hashtagNom varchar(30),
-    primary key(fotografiaNom, hashtagNom),
-    constraint fk_fotografiaHashtags_fotografia foreign key (fotografiaNom) references fotografia(nom),
-    constraint fk_fotografiaHashtags_hashtags foreign key (hashtagNom) references hashtags(nom)
+    primary key(fotografiaNom,hashtagNom),
+    constraint fk_fotografiaHashtags_fotografia foreign key (fotografiaNom) references fotografia(nom) on delete cascade,
+    constraint fk_fotografiaHashtags_hashtags foreign key (hashtagNom) references hashtags(nom) on delete cascade
+) engine = InnoDB;
+
+create table if not exists fotografiausers (
+    fotografiaNom char(64),
+    userId int,
+    vot int,
+    primary key(fotografiaNom,userId),
+    constraint fk_fotografiaHashtags_fotografia2 foreign key (fotografiaNom) references fotografia(nom) on delete cascade,
+    constraint fk_fotografiaHashtags_users foreign key (userId) references users(iduser) on delete cascade
 ) engine = InnoDB;

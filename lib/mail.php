@@ -3,8 +3,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 require 'vendor/autoload.php';
 function enviarMailVerificacio($email, $username, $activationcode)
 {
-    $url = "http://localhost/practiquesphp/Practica5/Web/mailCheckAccount.php?code=" . $activationcode . "&mail=" . $email;
-    include dirname(__FILE__) . '\..\templates\verificacioMail.phtml';
+    $url = "http://localhost/practiquesphp/Practica6/Web/mailCheckAccount.php?code=" . $activationcode . "&mail=" . $email;
+    include dirname(__FILE__) . '/../templates/verificacioMail.phtml';
 
     $mail = new PHPMailer();
     $mail->IsSMTP();
@@ -30,15 +30,15 @@ function enviarMailVerificacio($email, $username, $activationcode)
     $mail->MsgHTML($body);
 
     //Enviament
-    $mail->Send();
+    return $mail->Send();
 }
 
 function enviarMailResetPassword($email, $username, $resetPassCode, $tipus)
 {
-  if ($tipus) $url = "http://localhost/practiquesphp/Practica5/Web/resetPassword.php?code=" . $resetPassCode . "&mail=" . $email;
-  else $url = "http://localhost/practiquesphp/Practica5/Web/resetPassword.php?code=" . $resetPassCode . "&user=" . $username;
+  if ($tipus) $url = "http://localhost/practiquesphp/Practica6/Web/resetPassword.php?code=" . $resetPassCode . "&mail=" . $email;
+  else $url = "http://localhost/practiquesphp/Practica6/Web/resetPassword.php?code=" . $resetPassCode . "&user=" . $username;
     
-    include dirname(__FILE__) . '\..\templates\resetPassword.phtml';
+    include dirname(__FILE__) . '/../templates/resetPassword.phtml';
 
     $mail = new PHPMailer();
     $mail->IsSMTP();
@@ -69,9 +69,9 @@ function enviarMailResetPassword($email, $username, $resetPassCode, $tipus)
 
 function enviarMailContrasenyaCanviada($email)
 {
-  $url = "http://localhost/practiquesphp/Practica5/Web/index.php";
+  $url = "http://localhost/practiquesphp/Practica6/Web/index.php";
     
-    include dirname(__FILE__) . '\..\templates\contrasenyaCanviada.phtml';
+    include dirname(__FILE__) . '/../templates/contrasenyaCanviada.phtml';
 
     $mail = new PHPMailer();
     $mail->IsSMTP();

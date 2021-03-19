@@ -21,15 +21,23 @@
                 $ext = pathinfo($imgNom, PATHINFO_EXTENSION);
                 $imgNomRand = $imgNom . rand().time();
 
-                $imgNomFinal = hash('sha256',$imgNomRand);
-                $imgNomFinal = $imgNomFinal .".". $ext;
+                $tipus = $_FILES['imatge']['type'];
+                $allowed = array("image/jpeg", "image/png");
+                if(in_array($tipus, $allowed)) {
+                    $imgNomFinal = hash('sha256',$imgNomRand);
+                    $imgNomFinal = $imgNomFinal .".". $ext;
 
-                $res = move_uploaded_file($_FILES['imatge']['tmp_name'], 'data/' . $imgNomFinal);
+                    $res = move_uploaded_file($_FILES['imatge']['tmp_name'], 'data/' . $imgNomFinal);
 
-                $path = "data/" . $imgNomFinal;
+                    $path = "data/" . $imgNomFinal;
 
-                insereixFotografia($imgNomFinal,$descripcio,$path,getUserId($_SESSION['username']));
-                comprovarHashtags($imgNomFinal,$matches);            
+                    insereixFotografia($imgNomFinal,$descripcio,$path,getUserId($_SESSION['username']));
+                    comprovarHashtags($imgNomFinal,$matches);         
+                }
+                else
+                {
+                    $_SESSION["uploadImg"] =  "Només es permet jpg i png!";
+                }
             }
         }
         else $_SESSION["uploadImg"] =  "Comprova les dades inserides!";

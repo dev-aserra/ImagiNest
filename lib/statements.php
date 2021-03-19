@@ -94,6 +94,28 @@ function getUserId($username)
     return $stmt->fetchColumn();
 }
 
+function getFirstNameByUsername($username)
+{
+    global $db;
+    $sql = "SELECT userFirstName FROM users WHERE username = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $username, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getLastNameByUsername($username)
+{
+    global $db;
+    $sql = "SELECT userLastName FROM users WHERE username = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $username, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
 function comprovaCodiActivacio($email, $hash)
 {
     global $db;
@@ -171,6 +193,16 @@ function actualitzarContrasenya($usernameMail, $password_hash)
     $stmt->bindParam(1, $password_hash, PDO::PARAM_STR);
     $stmt->bindParam(2, $usernameMail, PDO::PARAM_STR);
     $stmt->bindParam(3, $usernameMail, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function actualitzarContrasenyaSettings($username, $password_hash)
+{
+    global $db;
+    $sql = "UPDATE users SET passHash = ? WHERE username = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $password_hash, PDO::PARAM_STR);
+    $stmt->bindParam(2, $username, PDO::PARAM_STR);
     $stmt->execute();
 }
 
@@ -325,3 +357,214 @@ function getNumberOfPhotos()
     return $stmt->fetchColumn();
 }
 
+function guardaVotacio($vot,$usuari,$nomFotografia)
+{
+    global $db;
+    $sql = "INSERT INTO fotografiausers (fotografiaNom, userId, vot) VALUES (?, ?, ?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $nomFotografia, PDO::PARAM_STR);
+    $stmt->bindParam(2, $usuari, PDO::PARAM_INT);
+    $stmt->bindParam(3, $vot, PDO::PARAM_STR);
+    return $stmt->execute();
+}
+
+function actualitzaVotacio($vot,$usuari,$nomFotografia)
+{
+    global $db;
+    $sql = "UPDATE fotografiausers SET vot = ? WHERE userId = ? AND fotografiaNom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $vot, PDO::PARAM_INT);
+    $stmt->bindParam(2, $usuari, PDO::PARAM_INT);
+    $stmt->bindParam(3, $nomFotografia, PDO::PARAM_STR);
+    return $stmt->execute();
+}
+
+function votacioUsuari($iduser, $fotografiaNom)
+{
+    global $db;
+    $sql = "SELECT vot FROM fotografiausers WHERE userId = ? AND fotografiaNom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $iduser, PDO::PARAM_INT);
+    $stmt->bindParam(2, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function incrementaLike($fotografiaNom)
+{
+    global $db;
+    $sql = "UPDATE fotografia SET likes = likes+1 WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function incrementaDislike($fotografiaNom)
+{
+    global $db;
+    $sql = "UPDATE fotografia SET dislikes = dislikes+1 WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function decrementaDislike($fotografiaNom)
+{
+    global $db;
+    $sql = "UPDATE fotografia SET dislikes = dislikes-1 WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function decrementaLike($fotografiaNom)
+{
+    global $db;
+    $sql = "UPDATE fotografia SET likes = likes-1 WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function actualitzaPuntuacio($fotografiaNom)
+{
+    global $db;
+    $sql = "UPDATE fotografia SET puntuacio = (likes / (likes + dislikes)) * 5 WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+}
+
+function getPhotoRating($fotografiaNom)
+{
+    global $db;
+    $sql = "SELECT puntuacio FROM fotografia WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $fotografiaNom, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchColumn();
+}
+
+function getImageArray()
+{
+    global $db;
+    $sql = "SELECT * FROM fotografia ORDER BY data DESC";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getImageArrayByUser($userId)
+{
+    global $db;
+    $sql = "SELECT * FROM fotografia WHERE usuariId = ? ORDER BY data DESC";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getImagesByHashtag($hashtag)
+{
+    global $db;
+    $sql = "SELECT fotografiaNom FROM fotografiahashtags WHERE hashtagNom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $hashtag, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getImageByName($nom)
+{
+    global $db;
+    $sql = "SELECT * FROM fotografia WHERE nom = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $nom['fotografiaNom'], PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function eliminarFoto($path)
+{
+    global $db;
+    $sql = "DELETE FROM fotografia WHERE url = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $path, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}
+
+function actualitzaUsername($newUsername,$iduser)
+{
+    global $db;
+    $sql = "UPDATE users SET username = ? WHERE iduser = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $newUsername, PDO::PARAM_STR);
+    $stmt->bindParam(2, $iduser, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}
+
+function actualitzaEmail($newEmail,$iduser)
+{
+    global $db;
+    $sql = "UPDATE users SET mail = ? WHERE iduser = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $newEmail, PDO::PARAM_STR);
+    $stmt->bindParam(2, $iduser, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}
+
+function eliminaUsuari($iduser)
+{
+    global $db;
+    $sql = "DELETE FROM users WHERE iduser = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $iduser, PDO::PARAM_INT);
+    $stmt->execute();
+}
+
+function actualitzaUserFirstName($newFirstName,$iduser)
+{
+    global $db;
+    $sql = "UPDATE users SET userFirstName = ? WHERE iduser = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $newFirstName, PDO::PARAM_STR);
+    $stmt->bindParam(2, $iduser, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}
+
+function actualitzaUserLastName($newLastName,$iduser)
+{
+    global $db;
+    $sql = "UPDATE users SET userLastName = ? WHERE iduser = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $newLastName, PDO::PARAM_STR);
+    $stmt->bindParam(2, $iduser, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}
+
+function getImagesVotedByUser($iduser)
+{
+    global $db;
+    $sql = "SELECT fotografiaNom,vot FROM fotografiausers WHERE userId = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(1, $iduser, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+}

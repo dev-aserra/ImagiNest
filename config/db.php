@@ -1,5 +1,5 @@
 <?php
-    $cadena_connexio = 'mysql:dbname=imaginest;host=localhost:5306';
+    $cadena_connexio = 'mysql:dbname=imaginest;host=localhost:5306;charset=utf8';
     $usuari = 'root';
     $passwd = '';
     try{

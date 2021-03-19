@@ -74,10 +74,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $activationcode = hash('sha256', rand().time());
             if(insereixUsuari($email, $username, $password_hash, $firstname, $lastname, $activationcode))
             {
-                enviarMailVerificacio($email, $username, $activationcode);
-                $_SESSION['success'] = "S'ha registrat correctament. Verifiqueu el vostre correu electrònic.";
-                header('Location: index.php');
-                exit;
+                if(!enviarMailVerificacio($email, $username, $activationcode)) {
+                    array_push($errors, "No s'ha pogut enviar el correu de verificació. Torneu a intentar-ho més tard.");
+                }
+                else {
+                    $_SESSION['success'] = "S'ha registrat correctament. Verifiqueu el vostre correu electrònic.";
+                    header('Location: index.php');
+                    exit;
+                }
             } else {
                 array_push($errors, "Hi ha hagut un problema amb el registre. Torneu-ho a intentar més tard.");
             }
@@ -107,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si surt per alguna de les condicions, indica un error amb les dades introduïdes
         array_push($errors, "No s'ha pogut iniciar sessió amb les dades introduïdes");
     }
+    
 } else {
     // Si l'usuari ha fet login, redirigeix al home.php
     if (isset($_SESSION['username'])) {
